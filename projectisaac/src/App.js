@@ -1,25 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import {useEffect} from "react";
+import {setApi} from "./Global/Redux/Redux.actions";
+import Navbar from "./Global/Navbar";
+import {connect} from "react-redux";
 
-function App() {
+const axios = require('axios')
+const api = axios.create({
+  baseURL: 'http://localhost:5001/',
+  timeout: 10000
+})
+
+
+function App(props) {
+  useEffect( () =>{
+    props.dispatch(setApi(api))
+  },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar/>
     </div>
   );
 }
 
-export default App;
+export default connect()(App);
